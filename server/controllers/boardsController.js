@@ -10,6 +10,13 @@ const getBoards = (req, res, next) => {
   });
 };
 
+const getBoardById = (req, res, next) => {
+  const boardId = req.params.id;
+  Board.find({ _id: boardId }, "title _id createdAt updatedAt").then(
+    (board) => res.json({ board })
+  );
+};
+
 const createBoard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
