@@ -4,7 +4,11 @@ const boardsController = require("../controllers/boardsController");
 const { validateBoard } = require("../validators/validators");
 
 
-router.get('/boards',boardsController.getBoards );
+router.get('/boards', boardsController.getBoards );
+
+// GET /api/board/:id endpoint
+router.get('/board/:id', boardsController.getBoardById );
+
 
 router.post('/boards', validateBoard, boardsController.createBoard );
 
