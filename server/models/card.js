@@ -17,7 +17,7 @@ const CardSchema = new Schema({
 		ref: "List"
 	},
   position: {
-    type: Decimal128,
+    type: Number,
   },
   archived: {
     type: Boolean,
@@ -40,18 +40,15 @@ const CardSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Board"
 	},
-  comments:  [
-    { type: String, },
-  ],
-  commentsCount: {
-    type: Integer,
-  },
+  // comments:  [
+  //   { type: String, },
+  // ],
   actions: [
  // Need to come back to this??
   ],
 })
 
 
-const List = mongoose.model('List', ListSchema);
+const Card = mongoose.model('Card', CardSchema);
 
-module.exports = List;
+module.exports = Card;

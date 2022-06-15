@@ -21,7 +21,7 @@ const ListSchema = new Schema({
 		default: Date.now 
 	},
   position: {
-    type: mongoose.Decimal128,
+    type: Number,
   },
   cards: [
     {

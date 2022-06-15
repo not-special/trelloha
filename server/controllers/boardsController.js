@@ -15,7 +15,7 @@ const getBoardById = (req, res) => {
   const boardId = req.params.id;
   Board.findOne({ _id: boardId })
   .populate('lists')
-  .then((board) => res.json({ board }))
+  .then((board) => res.json(board))
   .catch((err) =>
   next(new HttpError("Fetching board failed, please try again", 500))
 );
@@ -38,6 +38,18 @@ const createBoard = (req, res, next) => {
   }
 };
 
+const addListToBoard = (req, res, next) => {
+  const list = req.list;
+  const boardId = req.body.boardId;
+  Board.findByIdAndUpdate(boardId, {
+    $addToSet: { lists: list._id } // adds list to the lists array in board
+  }).then(() => {
+    next();
+  });
+};
+
+
 exports.getBoards = getBoards;
 exports.getBoardById = getBoardById;
 exports.createBoard = createBoard;
+exports.addListToBoard = addListToBoard;
