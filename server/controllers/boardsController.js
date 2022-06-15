@@ -13,7 +13,8 @@ const getBoards = (req, res, next) => {
 
 const getBoardById = (req, res) => {
   const boardId = req.params.id;
-  Board.find({ _id: boardId })
+  Board.findOne({ _id: boardId })
+  .populate('lists')
   .then((board) => res.json({ board }))
   .catch((err) =>
   next(new HttpError("Fetching board failed, please try again", 500))
@@ -23,7 +24,7 @@ const getBoardById = (req, res) => {
 const createBoard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    Board.create(req.body.board)``
+    Board.create(req.body.board)
       .then((board) => {
         Board.find({ _id: board._id }, "title _id createdAt updatedAt").then(
           (board) => res.json({ board })
