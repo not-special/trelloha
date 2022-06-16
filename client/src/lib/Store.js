@@ -1,7 +1,10 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "../reducers/rootReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import boardsReducer from "../features/boards/boards";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = configureStore({
+  reducer: {
+    boards: boardsReducer,
+  },
+});
 
 export default store;
