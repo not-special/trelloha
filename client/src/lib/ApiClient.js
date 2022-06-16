@@ -30,7 +30,18 @@ const apiClient = {
     } catch (e) {
       logError(e);
     }
-  },
+  }, 
+  getBoard: async (id) => {
+    const URL = routes.BOARD_BY_ID + id;
+    console.log("route sending", URL)
+    try {
+      const { data } = await axios.get(URL);
+      console.log("axios sends requests", data);
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  }
 };
 
 export default apiClient;

@@ -8,7 +8,7 @@ const { validateBoard, validateList, validateCard } = require("../validators/val
 
 router.get('/boards', boardsController.getBoards );
 
-router.get('/board/:id', boardsController.getBoardById );
+router.get('/boards/:id', boardsController.getBoardById );
 
 router.post('/boards', validateBoard, boardsController.createBoard );
 

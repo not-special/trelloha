@@ -1,4 +1,4 @@
-git commit -m "updating frontend to react toolkit
+git commit -m "manually add lists and cards, nesting correctly
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>
