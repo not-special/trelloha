@@ -4,9 +4,7 @@ const { validationResult } = require("express-validator");
 
 const getBoards = (req, res, next) => {
   Board.find({}, "title _id createdAt updatedAt").then((boards) => {
-    res.json({
-      boards,
-    });
+    res.json(boards);
   });
 };
 
@@ -14,7 +12,10 @@ const getBoards = (req, res, next) => {
 const getBoardById = (req, res) => {
   const boardId = req.params.id;
   Board.findOne({ _id: boardId })
-  .populate('lists')
+  .populate({
+    path: 'lists',
+    populate: { path: 'cards' },
+  })
   .then((board) => res.json(board))
   .catch((err) =>
   next(new HttpError("Fetching board failed, please try again", 500))
