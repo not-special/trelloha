@@ -5,6 +5,7 @@ import CardTile from "./CardTile";
 const List = ({ list }) => {
   const cards = useSelector(state => state.cards);
   const currListCards = cards.filter(c => c.listId === list._id);
+  
 /*add-dropdown-active*/ // add this text behind list-wrapper className 
 // to show the add card dropdown
   return (

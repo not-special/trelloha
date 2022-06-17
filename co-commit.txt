@@ -1,4 +1,4 @@
-git commit -m "frontend, receiving data done
+git commit -m "frontend, view lists done
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>

@@ -6,10 +6,6 @@ import { fetchBoards } from "../../features/boards/boards";
 
 const BoardsDashboard = (props) => {
   const boards = useSelector((state) => state.boards);
-  const lists = useSelector((state) => state.lists);
-  const cards = useSelector((state) => state.cards);
-
-  console.log(boards, lists, cards)
 
   const boardTiles = boards.map((board) => {
     return <BoardTile key={board._id} title={board.title} id={board._id} />;

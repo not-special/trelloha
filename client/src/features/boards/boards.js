@@ -5,7 +5,6 @@ const initialState = [];
 
 export const fetchBoards = createAsyncThunk("boards/fetchBoards", async () => {
   const data = await apiClient.getBoards();
-  console.log("data", data);
   return data;
 });
 

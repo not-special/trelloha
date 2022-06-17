@@ -1,7 +1,7 @@
 import React from "react";
 
-const CardTile = () => {
-
+const CardTile = ({ card }) => {
+  console.log(card)
   return (
     <div className="card-background">
       <div className="card ">
@@ -14,8 +14,7 @@ const CardTile = () => {
           <div className="card-label blue colorblindable"></div>
           <div className="card-label purple colorblindable"></div>
           <p>
-            Cards do many cool things. Click on this card to
-            open it and learn more...
+            {card.title}
           </p>
         </div>
         <div className="card-icons">
