@@ -1,7 +1,14 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "../reducers/rootReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import boardsReducer from "../features/boards/boards";
+import listsReducer from "../features/lists/lists";
+import cardsReducer from "../features/cards/cards";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = configureStore({
+  reducer: {
+    boards: boardsReducer,
+    lists: listsReducer, 
+    cards: cardsReducer
+  },
+});
 
 export default store;

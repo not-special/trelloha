@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import BoardTile from "./BoardTile";
 import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../../actions/BoardActions";
 import CreateBoardTile from "./CreateBoardTile";
+import { fetchBoards } from "../../features/boards/boards";
 
 const BoardsDashboard = (props) => {
   const boards = useSelector((state) => state.boards);
@@ -14,7 +14,7 @@ const BoardsDashboard = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.fetchBoards());
+    dispatch(fetchBoards());
   }, [dispatch]);
 
   return (

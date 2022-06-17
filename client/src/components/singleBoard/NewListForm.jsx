@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import useInput from "../../hooks/useInput";
 import { createBoard } from "../../features/boards/boards";
 
-const NewBoardForm = (props) => {
+const NewListForm = (props) => {
   const { value: title, bind: bindTitle } = useInput("");
 
   const dispatch = useDispatch();
@@ -58,4 +58,4 @@ const NewBoardForm = (props) => {
   );
 };
 
-export default NewBoardForm;
+export default NewListForm;
