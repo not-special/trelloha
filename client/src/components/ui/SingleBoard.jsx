@@ -11,23 +11,24 @@ const SingleBoard = () => {
   const params = useParams();
   const boardId = params.id;
   const boards = useSelector(state => state.boards);
+  const lists = useSelector(state => state.lists);
   const board = boards.find(b => b._id === boardId);
 
   useEffect(() => {
     dispatch(fetchBoard(boardId))
   }, [dispatch, boardId])
-  
-  if (board === undefined) return null;
-    
+
+  if ( board === undefined) return null;
+
   return (
     <>
       <Header />
       <main>
         <div id="list-container" className="list-container">
           <div id="existing-lists" className="existing-lists">
-            { /*board.lists.map(list => (
-              <List key={list._id} list={list}/>*/
-            }
+            {lists.map(list => (
+              <List key={list._id} list={list}/>
+            ))}
             {/* <div className="list-wrapper">
               <div className="list-background">
                 <div className="list">

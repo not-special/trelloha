@@ -1,4 +1,4 @@
-git commit -m "manually add lists and cards, nesting correctly
+git commit -m "frontend, receiving data done
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>

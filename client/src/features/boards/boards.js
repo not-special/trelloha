@@ -5,11 +5,13 @@ const initialState = [];
 
 export const fetchBoards = createAsyncThunk("boards/fetchBoards", async () => {
   const data = await apiClient.getBoards();
+  console.log("data", data);
   return data;
 });
 
 export const fetchBoard = createAsyncThunk("boards/fetchBoard", async (id) => {
   const data = await apiClient.getBoard(id); 
+  
   return data;
 })
 
@@ -36,10 +38,8 @@ const boardSlice = createSlice({
       state.push(action.payload);
     });
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      
       const filteredState = state.filter(board => board._id !== action.payload._id);
-      const newState = filteredState.concat(action.payload);
-      return newState;
+      return filteredState.concat(action.payload);
     });
   },
 });

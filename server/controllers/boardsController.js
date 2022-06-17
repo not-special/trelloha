@@ -16,7 +16,9 @@ const getBoardById = (req, res) => {
     path: 'lists',
     populate: { path: 'cards' },
   })
-  .then((board) => res.json(board))
+  .then((board) => {
+    return res.json(board)
+  })
   .catch((err) =>
   next(new HttpError("Fetching board failed, please try again", 500))
 );

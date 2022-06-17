@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import CardTile from "./CardTile";
 
-const List = (props) => {
-
+const List = ({ list }) => {
+  const cards = useSelector(state => state.cards);
+  const currListCards = cards.filter(c => c.listId === list._id);
 /*add-dropdown-active*/ // add this text behind list-wrapper className 
 // to show the add card dropdown
   return (
@@ -10,7 +13,7 @@ const List = (props) => {
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{props.list.title}</p>
+            <p className="list-title">{list.title}</p>
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>
@@ -21,31 +24,12 @@ const List = (props) => {
             </div>
           </div>
           <div id="cards-container" data-id="list-1-cards">
-            <div className="card-background">
-              <div className="card ">
-                <i className="edit-toggle edit-icon sm-icon"></i>
-                <div className="card-info">
-                  <div className="card-label green colorblindable"></div>
-                  <div className="card-label yellow colorblindable"></div>
-                  <div className="card-label red colorblindable"></div>
-                  <div className="card-label orange colorblindable"></div>
-                  <div className="card-label blue colorblindable"></div>
-                  <div className="card-label purple colorblindable"></div>
-                  <p>
-                    Cards do many cool things. Click on this card to
-                    open it and learn more...
-                  </p>
-                </div>
-                <div className="card-icons">
-                  <i className="clock-icon sm-icon overdue-recent completed">
-                    Aug 4
-                  </i>
-                  <i className="description-icon sm-icon"></i>
-                  <i className="comment-icon sm-icon"></i>
-                </div>
-              </div>
-            </div>
-            <div className="card-background">
+              {
+                currListCards.map(card => (
+                  <CardTile key={card._id} card={card}/>
+                ))
+              }
+            {/* <div className="card-background">
               <div className="card ">
                 <i className="edit-toggle edit-icon sm-icon"></i>
                 <div className="cover-image"></div>
@@ -70,7 +54,7 @@ const List = (props) => {
                 </div>
                 <div className="card-icons"></div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="add-dropdown add-bottom">
             <div className="card">
