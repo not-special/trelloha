@@ -1,7 +1,6 @@
 import React from "react";
 
 const CardTile = ({ card }) => {
-  console.log(card)
   return (
     <div className="card-background">
       <div className="card ">

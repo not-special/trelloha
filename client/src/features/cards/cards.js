@@ -11,8 +11,7 @@ const cardSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
       const { lists } = action.payload;
-
-			const currentListIds = lists.map(list => list._Id);
+			const currentListIds = lists.map(list => list._id);
 			const cardsWithoutCurrent = state.filter(card => !currentListIds.includes(card.listId))
       
 			const currentCards = [];
