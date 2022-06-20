@@ -5,9 +5,11 @@ import { useParams } from 'react-router-dom';
 import { fetchBoard } from '../../features/boards/boards';
 import Header from "../ui/Header";
 import List from "./List";
+import { createList } from '../../features/lists/lists'
 
 const Board = () => {
   const [addingList, setAddingList] = useState(false);
+  const [newListTitle, setNewListTitle] = useState("");
   const dispatch = useDispatch();
   const params = useParams();
   const boardId = params.id;
@@ -21,7 +23,7 @@ const Board = () => {
   })
 
   useEffect(() => {
-    dispatch(fetchBoard(boardId))
+    dispatch(fetchBoard(boardId));
   }, [dispatch, boardId])
 
   const handleAddList = (e) => {
@@ -30,6 +32,19 @@ const Board = () => {
   };
 
   if ( board === undefined) return null;
+
+  const handleSaveList = (event) => {
+    event.preventDefault();
+    const newList = {
+      "boardId": boardId,
+      "list": {
+        "title": newListTitle,
+      }
+    };
+    dispatch(createList(newList));
+    setNewListTitle("");
+    setAddingList(false);
+  };
 
   return (
     <>
@@ -41,10 +56,13 @@ const Board = () => {
           </div>  
           <div id="new-list" className={`new-list ${addingList ? "selected" : ""}`}>
             <span onClick={handleAddList}>Add a list...</span>
-            <input type="text" placeholder="Add a list..." />
+            <input type="text" 
+                  placeholder="Add a list..." 
+                  onChange={(e) => setNewListTitle(e.target.value)} 
+                  value={newListTitle} />
             <div>
-              <input type="submit" className="button" value="Save" />
-              <i className="x-icon icon"></i>
+              <input type="submit" className="button" value="Save" onClick={handleSaveList} />
+              <i className="x-icon icon" onClick={() => {setAddingList(false)}}></i>
             </div>
           </div>
         </div>

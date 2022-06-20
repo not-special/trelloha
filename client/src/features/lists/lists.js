@@ -8,6 +8,7 @@ export const createList = createAsyncThunk(
   "lists/createList",
   async (newList, callback) => {
     const data = await apiClient.createList(newList);
+    console.log(data);
     if (callback) {
       callback;
     }
@@ -21,14 +22,16 @@ const listSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      const { lists, boardId } = action.payload;
+      const { lists } = action.payload;
+      const boardId = action.payload._id;
       const listsWithoutCurrent = state.filter(l => l.boardId !== boardId);
       return [...listsWithoutCurrent, ...lists];
     });
     builder.addCase(createList.fulfilled, (state, action) => {
-      const { lists, boardId } = action.payload;
-      const listsWithoutCurrent = state.filter(l => l.boardId !== boardId);
-      return [...listsWithoutCurrent, ...lists];
+      const addedList = action.payload;
+      // const listsWithoutCurrent = state.filter(l => addedList._id !== boardId);
+      // return [...listsWithoutCurrent, ...lists];
+      return [...state, addedList];
     });
   },
 });
