@@ -3,14 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import CardTile from "./CardTile";
 import { useState } from "react";
 import { editList } from '../../features/lists/lists';
+import { createCard } from '../../features/cards/cards';
 
-const List = ({ list }) => {
+const List = ({ list, onAddCardForm, cardFormActive, onCardSelect }) => {
   const dispatch = useDispatch();
   const [showEditTitle, setShowEditTitle] = useState(false);
   const [title, setTitle] = useState(list.Title);
+  const [cardTitle, setCardTitle] = useState("");
   const cards = useSelector(state => state.cards);
   const currListCards = cards.filter(c => c.listId === list._id);
-  
+  const addingCard = cardFormActive === list._id;
 /*add-dropdown-active*/ // add this text behind list-wrapper className 
 // to show the add card dropdown
 
@@ -25,10 +27,36 @@ const handleEditTitle = (e) => {
   }
 }
 
+const handleSaveCard = (e) => {
+  e.preventDefault();
+  const newCard = {
+    "listId": list._id,
+    "card": {
+      "title": cardTitle,
+    }
+  };
+  dispatch(createCard(newCard));
+  setCardTitle("");
+  onAddCardForm("");
+}
+
 // editableListTitle
 
+
+/*
+The new card form is active when the parent .list-wrapper has the add-dropdown-active class 
+and the .add-dropdown.add-bottom element has the active-card class.
+
+Since only one list should have the form active at a time, only one list should have 
+the add-dropdown-active class at a time.
+
+
+show = true 
+
+*/
+
   return (
-    <div className="list-wrapper ">
+    <div className={`list-wrapper ${addingCard ? "add-dropdown-active": ""}`}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -58,49 +86,27 @@ const handleEditTitle = (e) => {
           <div id="cards-container" data-id="list-1-cards">
               {
                 currListCards.map(card => (
-                  <CardTile key={card._id} card={card}/>
+                  <CardTile key={card._id} card={card} onCardSelect={onCardSelect}/>
                 ))
               }
-            {/* <div className="card-background">
-              <div className="card ">
-                <i className="edit-toggle edit-icon sm-icon"></i>
-                <div className="cover-image"></div>
-                <div className="card-info">
-                  <p>Another list with stuff</p>
-                </div>
-                <div className="card-icons">
-                  <i className="clock-icon sm-icon overdue ">Aug 3</i>
-                  <i className="description-icon sm-icon"></i>
-                </div>
-              </div>
-            </div>
-            <div className="card-background">
-              <div className="card ">
-                <i className="edit-toggle edit-icon sm-icon"></i>
-                <div className="cover-image"></div>
-                <div className="card-info">
-                  <p>
-                    Use the + in the top menu to make your first board
-                    now.
-                  </p>
-                </div>
-                <div className="card-icons"></div>
-              </div>
-            </div> */}
           </div>
-          <div className="add-dropdown add-bottom">
+          <div className={`add-dropdown add-bottom ${addingCard ? "active-card": ""}`}>
             <div className="card">
               <div className="card-info"></div>
-              <textarea name="add-card"></textarea>
+              <textarea name="add-card" 
+                placeholder="Enter a title or this card" 
+                onChange={(e) => setCardTitle(e.target.value)} 
+                defaultValue={cardTitle}>  
+              </textarea>
               <div className="members"></div>
             </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
+            <a className="button" onClick={handleSaveCard}>Add</a>
+            <i className="x-icon icon" onClick={() => onAddCardForm("")}></i>
             <div className="add-options">
               <span>...</span>
             </div>
           </div>
-          <div className="add-card-toggle" data-position="bottom">
+          <div className="add-card-toggle" data-position="bottom" onClick={() => onAddCardForm(list._id)}>
             Add a card...
           </div>
         </div>

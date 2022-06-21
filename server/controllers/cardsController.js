@@ -24,5 +24,18 @@ const createCard = (req, res, next) => {
 
 const sendCard = (req, res) => res.json(req.card);
 
+
+const getCardById = (req, res) => {
+  const cardId = req.params.id;
+  Card.findOne({ _id: cardId })
+  .then((card) => {
+    return res.json(card)
+  })
+  .catch((err) =>
+    next(new HttpError("Fetching card failed, please try again", 500))
+  );
+};
+
 exports.createCard = createCard;
 exports.sendCard = sendCard;
+exports.getCardById = getCardById;

@@ -1,9 +1,9 @@
 import React from "react";
 
-const CardTile = ({ card }) => {
+const CardTile = ({ card, onCardSelect }) => {
   return (
     <div className="card-background">
-      <div className="card ">
+      <div className="card " onClick={() => onCardSelect(card._id)}>
         <i className="edit-toggle edit-icon sm-icon"></i>
         <div className="card-info">
           <div className="card-label green colorblindable"></div>

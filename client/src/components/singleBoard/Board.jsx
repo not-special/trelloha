@@ -6,10 +6,13 @@ import { fetchBoard } from '../../features/boards/boards';
 import Header from "../ui/Header";
 import List from "./List";
 import { createList } from '../../features/lists/lists'
+import Card from "./Card";
 
 const Board = () => {
+  const [cardIsActive, setCardIsActive] = useState("");
   const [addingList, setAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
+  const [addingCard, setAddingCard] = useState("");
  /*
 1. extract app into more components
   - lists (lists, handleAddList, handleEditList)
@@ -22,8 +25,12 @@ const Board = () => {
   const lists = useSelector(state => state.lists);
   const currLists = lists.filter(l => l.boardId === boardId);
 
+  const handleCardForm = (id) => {
+    setAddingCard(id);
+  }
+
   const allLists = currLists.map(list => {
-    return <List key={list._id} list={list}/>
+    return <List key={list._id} list={list} onAddCardForm={handleCardForm} cardFormActive={addingCard} onCardSelect={setCardIsActive} />
   })
 
   useEffect(() => {
@@ -49,8 +56,12 @@ const Board = () => {
     setNewListTitle("");
     setAddingList(false);
   };
-
-  return (
+  return cardIsActive ?
+    (
+      <Card cardId={cardIsActive} onCloseCard={setCardIsActive} />
+    )
+    :
+    (
     <>
       <Header />
       <main>

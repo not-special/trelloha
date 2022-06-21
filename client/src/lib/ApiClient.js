@@ -50,7 +50,6 @@ const apiClient = {
   }, 
   editList: async (list) => {
     const { id, ...updatedList } = list;
-    console.log("just before backend", updatedList)
     const URL = routes.EDIT_LIST_URL + id;
     
     try {
@@ -60,6 +59,14 @@ const apiClient = {
       logError(e);
     }
   }, 
+  createCard: async (card) => {
+    try {
+      const { data } = await axios.post(routes.CREATE_CARD_URL, card);
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  }
 
 };
 

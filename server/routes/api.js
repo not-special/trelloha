@@ -18,7 +18,7 @@ router.post('/cards', validateCard, cardsController.createCard, listsController.
 
 router.put('/lists/:id', validateList, listsController.editList );
 
-// router.get('/cards/:id', validateCard);
+router.get('/cards/:id', validateCard, cardsController.getCardById);
 
 
 module.exports = router;

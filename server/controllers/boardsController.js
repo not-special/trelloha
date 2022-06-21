@@ -20,8 +20,8 @@ const getBoardById = (req, res) => {
     return res.json(board)
   })
   .catch((err) =>
-  next(new HttpError("Fetching board failed, please try again", 500))
-);
+    next(new HttpError("Fetching board failed, please try again", 500))
+  );
 };
 
 const createBoard = (req, res, next) => {
