@@ -1,20 +1,51 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CardTile from "./CardTile";
+import { useState } from "react";
+import { editList } from '../../features/lists/lists';
 
 const List = ({ list }) => {
+  const dispatch = useDispatch();
+  const [showEditTitle, setShowEditTitle] = useState(false);
+  const [title, setTitle] = useState(list.Title);
   const cards = useSelector(state => state.cards);
   const currListCards = cards.filter(c => c.listId === list._id);
   
 /*add-dropdown-active*/ // add this text behind list-wrapper className 
 // to show the add card dropdown
+
+const handleEditTitle = (e) => {
+  if (e.key === 'Enter') {
+    const updatedList = {
+      id: list._id,
+      title: title,
+    }
+    dispatch(editList(updatedList));
+    setShowEditTitle(false);
+  }
+}
+
+// editableListTitle
+
   return (
     <div className="list-wrapper ">
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{list.title}</p>
+            {showEditTitle ?
+              (
+                <input type="text" 
+                  className="list-title"
+                  placeholder={list.title} 
+                  onChange={(e) => setTitle(e.target.value)} 
+                  value={title} 
+                  onKeyPress={handleEditTitle}  
+                />
+              )
+             :
+              (<p className="list-title" onClick={() => {setShowEditTitle(true)}}>{list.title}</p>)
+            }
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>

@@ -31,7 +31,24 @@ const addCardToList = (req, res, next) => {
     $addToSet: { cards: card._id } // adds card to the cards array in list
   }).then(() => {
     next();
-  });
+  })
+  .catch((err) =>
+    next(new HttpError("Could not add new card, please try again", 500))
+  );
+};
+
+const editList = (req, res, next) => {
+  const listId = req.params.id;
+  const { title, position } =  req.body;
+  // console.log("backend BEFORE edit", title, listId);
+  List.findOneAndUpdate({ _id: listId }, { title: title }, { new: true })
+    .then((list) => {
+      // console.log("backend AFTER edit", dbList);
+      res.json(list);
+    })
+  .catch((err) =>
+    next(new HttpError("Could not update list, please try again", 500))
+  );
 };
 
 const sendList = (req, res) => res.json(req.list)
@@ -39,3 +56,4 @@ const sendList = (req, res) => res.json(req.list)
 exports.createList = createList;
 exports.addCardToList = addCardToList;
 exports.sendList = sendList;
+exports.editList = editList;

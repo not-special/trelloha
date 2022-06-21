@@ -10,6 +10,10 @@ import { createList } from '../../features/lists/lists'
 const Board = () => {
   const [addingList, setAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
+ /*
+1. extract app into more components
+  - lists (lists, handleAddList, handleEditList)
+ */
   const dispatch = useDispatch();
   const params = useParams();
   const boardId = params.id;
