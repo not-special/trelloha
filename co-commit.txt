@@ -1,4 +1,4 @@
-git commit -m "frontend, add list form appears
+git commit -m "frontend, new branch edit-list
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>

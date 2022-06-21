@@ -8,7 +8,17 @@ export const createList = createAsyncThunk(
   "lists/createList",
   async (newList, callback) => {
     const data = await apiClient.createList(newList);
-    console.log(data);
+    if (callback) {
+      callback;
+    }
+    return data;
+  }
+);
+
+export const editList = createAsyncThunk(
+  "lists/editList",
+  async (updatedList, callback) => {
+    const data = await apiClient.editList(updatedList);
     if (callback) {
       callback;
     }
@@ -33,6 +43,11 @@ const listSlice = createSlice({
       // return [...listsWithoutCurrent, ...lists];
       return [...state, addedList];
     });
+    builder.addCase(editList.fulfilled, (state, action) => {
+      const updatedList = action.payload;
+      const listsWithoutCurrent = state.filter(l => l._id !== updatedList._id); 
+      return [...listsWithoutCurrent, updatedList];
+    })
   },
 });
 

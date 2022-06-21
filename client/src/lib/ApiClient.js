@@ -48,6 +48,18 @@ const apiClient = {
       logError(e);
     }
   }, 
+  editList: async (list) => {
+    const { id, ...updatedList } = list;
+    console.log("just before backend", updatedList)
+    const URL = routes.EDIT_LIST_URL + id;
+    
+    try {
+      const { data } = await axios.put(URL, updatedList);
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  }, 
 
 };
 

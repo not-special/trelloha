@@ -16,4 +16,9 @@ router.post('/lists', validateList, listsController.createList, boardsController
 
 router.post('/cards', validateCard, cardsController.createCard, listsController.addCardToList, cardsController.sendCard );
 
+router.put('/lists/:id', validateList, listsController.editList );
+
+// router.get('/cards/:id', validateCard);
+
+
 module.exports = router;
