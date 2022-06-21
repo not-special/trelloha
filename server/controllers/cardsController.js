@@ -22,6 +22,19 @@ const createCard = (req, res, next) => {
   }
 };
 
+const addCommentsToCard = (req, res, next) => {
+  const comment = req.comment;
+  const cardId = req.body.cardId;
+  Card.findByIdAndUpdate(cardId, {
+    $addToSet: { comment: comment._id } // adds comment to the cards array in list
+  }).then(() => {
+    next();
+  })
+  .catch((err) =>
+    next(new HttpError("Could not add new comment, please try again", 500))
+  );
+};
+
 const sendCard = (req, res) => res.json(req.card);
 
 
@@ -39,3 +52,4 @@ const getCardById = (req, res) => {
 exports.createCard = createCard;
 exports.sendCard = sendCard;
 exports.getCardById = getCardById;
+exports.addCommentsToCard = addCommentsToCard;
