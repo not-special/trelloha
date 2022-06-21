@@ -40,9 +40,9 @@ const CardSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Board"
 	},
-  // comments:  [
-  //   { type: String, },
-  // ],
+  comments:  [
+    { type: String, },
+  ],
   actions: [
  // Need to come back to this??
   ],
