@@ -1,4 +1,4 @@
-git commit -m "backend, new branch comments
+git commit -m "backend, new branch edit-card
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>
