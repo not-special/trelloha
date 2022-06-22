@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = () => {
+const SingleCard = () => {
   return (
     <div id="modal-container">
       <div className="screen"></div>
@@ -235,4 +235,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default SingleCard;

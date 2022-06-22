@@ -1,9 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const CardTile = ({ card, onCardSelect }) => {
+const CardTile = ({ card }) => {
+  
   return (
     <div className="card-background">
-      <div className="card " onClick={() => onCardSelect(card._id)}>
+      <Link to={`/cards/${card._id}`}>
+      <div className="card ">
         <i className="edit-toggle edit-icon sm-icon"></i>
         <div className="card-info">
           <div className="card-label green colorblindable"></div>
@@ -24,8 +27,11 @@ const CardTile = ({ card, onCardSelect }) => {
           <i className="comment-icon sm-icon"></i>
         </div>
       </div>
+      </Link>
     </div>
   )
 } 
 
 export default CardTile;
+
+

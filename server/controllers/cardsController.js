@@ -6,8 +6,9 @@ const createCard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     const newCard = {
-      listId: req.body.listId,
+      listId: req.list._id,
       title: req.body.card.title,
+      boardId: req.list.boardId,
     }
     Card.create(newCard)
       .then((card) => {
@@ -24,7 +25,7 @@ const createCard = (req, res, next) => {
 
 const addCommentsToCard = (req, res, next) => {
   const comment = req.comment;
-  const cardId = req.body.cardId;
+  const cardId = req.comment.cardId;
   Card.findByIdAndUpdate(cardId, {
     $addToSet: { comment: comment._id } // adds comment to the cards array in list
   }).then(() => {
@@ -49,7 +50,26 @@ const getCardById = (req, res) => {
   );
 };
 
+/*
+edit cards: editing cards also generates actions (check docs)
+
+*/
+const editCard = (req, res, next) => {
+  // const cardId = req.params.id;
+  // const { title, position } =  req.body;
+
+  // List.findOneAndUpdate({ _id: listId }, { title: title }, { new: true })
+  //   .then((list) => {
+
+  //     res.json(list);
+  //   })
+  // .catch((err) =>
+  //   next(new HttpError("Could not update list, please try again", 500))
+  // );
+};
+
 exports.createCard = createCard;
 exports.sendCard = sendCard;
 exports.getCardById = getCardById;
 exports.addCommentsToCard = addCommentsToCard;
+exports.editCard = editCard;

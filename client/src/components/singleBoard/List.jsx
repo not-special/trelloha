@@ -40,20 +40,6 @@ const handleSaveCard = (e) => {
   onAddCardForm("");
 }
 
-// editableListTitle
-
-
-/*
-The new card form is active when the parent .list-wrapper has the add-dropdown-active class 
-and the .add-dropdown.add-bottom element has the active-card class.
-
-Since only one list should have the form active at a time, only one list should have 
-the add-dropdown-active class at a time.
-
-
-show = true 
-
-*/
 
   return (
     <div className={`list-wrapper ${addingCard ? "add-dropdown-active": ""}`}>
