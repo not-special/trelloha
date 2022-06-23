@@ -1,16 +1,32 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useParams, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCard } from '../../features/cards/cards';
 
-const Card = ({ cardId, onCloseCard }) => {
+
+const Card = () => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const cardId = params.id;
   const cards = useSelector(state => state.cards);
   const currentCard = cards.find(card => card._id === cardId);
 
+  
+  useEffect(() => {
+    dispatch(fetchCard(cardId));
+  }, [dispatch, cardId])
+
+  if (currentCard === undefined) return null;
+
+  const boardId = currentCard.boardId;
 
   return (
     <div id="modal-container">
       <div className="screen"></div>
       <div id="modal">
-        <i className="x-icon icon close-modal" onClick={() => onCloseCard("")}></i>
+        <Link to={`/boards/${boardId}`}>
+          <i className="x-icon icon close-modal"></i>
+        </Link>
         <header>
           <i className="card-icon icon .close-modal"></i>
           <textarea className="list-title" defaultValue={currentCard.title} style={{ height: "45px" }}>
@@ -126,8 +142,7 @@ const Card = ({ cardId, onCloseCard }) => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        The activities have not been implemented yet.
+                      <textarea required="" defaultValue={'The activities have not been implemented yet.'}rows="1">
                       </textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
@@ -169,8 +184,7 @@ const Card = ({ cardId, onCloseCard }) => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        Example of a comment.
+                      <textarea required="" defaultValue={"Example of a comment."} rows="1">
                       </textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>

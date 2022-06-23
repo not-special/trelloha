@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const CardSchema = new Schema({
-	title: {
+  title: {
 		type: String,
 		required: [true, 'The Card title is required']
-	},
+	}, 
   description: {
     type: String,
   },

@@ -12,6 +12,10 @@ const getBoards = (req, res, next) => {
 const getBoardById = (req, res) => {
   const boardId = req.params.id;
   Board.findOne({ _id: boardId })
+  // .then(board => {
+  //   console.log("result from FindOneBoard", board)
+  //   return board;
+  // })
   .populate({
     path: 'lists',
     populate: { path: 'cards' },

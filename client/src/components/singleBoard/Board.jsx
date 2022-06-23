@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { fetchBoard } from '../../features/boards/boards';
 import Header from "../ui/Header";
 import List from "./List";
 import { createList } from '../../features/lists/lists'
-import Card from "./Card";
+// import Card from "./Card";
 
 const Board = () => {
-  const [cardIsActive, setCardIsActive] = useState("");
+  // const [cardIsActive, setCardIsActive] = useState("");
   const [addingList, setAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
   const [addingCard, setAddingCard] = useState("");
@@ -17,24 +17,43 @@ const Board = () => {
 1. extract app into more components
   - lists (lists, handleAddList, handleEditList)
  */
+  const location = useLocation();
   const dispatch = useDispatch();
   const params = useParams();
-  const boardId = params.id;
+  const urlId = params.id;
+  let boardId;
+  const path = location.pathname;
+  const cards = useSelector(state => state.cards);
+  
+
+  if (path.includes("cards")) {
+    // console.log("cards", cards);
+    const currentCard = cards.find(card => card._id === urlId);
+    if (currentCard) {
+      boardId = currentCard.boardId; 
+    }
+  } else {
+    boardId = urlId;
+  }
+  
   const boards = useSelector(state => state.boards);
   const board = boards.find(b => b._id === boardId);
   const lists = useSelector(state => state.lists);
   const currLists = lists.filter(l => l.boardId === boardId);
+
 
   const handleCardForm = (id) => {
     setAddingCard(id);
   }
 
   const allLists = currLists.map(list => {
-    return <List key={list._id} list={list} onAddCardForm={handleCardForm} cardFormActive={addingCard} onCardSelect={setCardIsActive} />
+    return <List key={list._id} list={list} onAddCardForm={handleCardForm} cardFormActive={addingCard} />
   })
 
   useEffect(() => {
+  if (boardId) {
     dispatch(fetchBoard(boardId));
+  }
   }, [dispatch, boardId])
 
   const handleAddList = (e) => {
@@ -56,12 +75,7 @@ const Board = () => {
     setNewListTitle("");
     setAddingList(false);
   };
-  return cardIsActive ?
-    (
-      <Card cardId={cardIsActive} onCloseCard={setCardIsActive} />
-    )
-    :
-    (
+  return (
     <>
       <Header />
       <main>
