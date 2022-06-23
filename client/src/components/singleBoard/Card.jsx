@@ -142,8 +142,7 @@ const Card = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        The activities have not been implemented yet.
+                      <textarea required="" defaultValue={'The activities have not been implemented yet.'}rows="1">
                       </textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>
@@ -185,8 +184,7 @@ const Card = () => {
                   </small>
                   <div className="comment">
                     <label>
-                      <textarea required="" rows="1">
-                        Example of a comment.
+                      <textarea required="" defaultValue={"Example of a comment."} rows="1">
                       </textarea>
                       <div>
                         <a className="light-button card-icon sm-icon"></a>

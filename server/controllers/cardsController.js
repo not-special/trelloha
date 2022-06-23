@@ -1,5 +1,6 @@
 const HttpError = require("../models/httpError");
 const Card = require("../models/card");
+const Action = require("../models/action")
 const { validationResult } = require("express-validator");
 
 const createCard = (req, res, next) => {
@@ -27,7 +28,7 @@ const addCommentsToCard = (req, res, next) => {
   const comment = req.comment;
   const cardId = req.comment.cardId;
   Card.findByIdAndUpdate(cardId, {
-    $addToSet: { comment: comment._id } // adds comment to the cards array in list
+    $addToSet: { comment: comment._id }, // adds comment to the cards array in list
   }).then(() => {
     next();
   })
@@ -50,23 +51,80 @@ const getCardById = (req, res) => {
   );
 };
 
-/*
-edit cards: editing cards also generates actions (check docs)
+const getActions = (props) => {
+  const actionDescriptions = {
+    dueDate: " modified due date",
+    completed: " changed the completion status",
+    listId: " moved card to a different list",
+    archived: " changed archived status",
+  };
+  const actions = [];
+  Object.keys(props).forEach(action => {
+    if (actionDescriptions[action]) {
+      actions.push(actionDescriptions[action])
+    }
+  });
+  return actions;
+}
 
-*/
-const editCard = (req, res, next) => {
-  // const cardId = req.params.id;
-  // const { title, position } =  req.body;
+const createActionsFromDescriptions = async (arrOfDesc, cardId) => {
+  const createdActions = [];
+  for (let i = 0; i < arrOfDesc.length; i += 1) {
+    const toCreate = {
+      description: arrOfDesc[i],
+      cardId
+    };
+    let newAction = await Action.create(toCreate);
+    createdActions.push(newAction._id);  
+  }
+  return createdActions;
+}
 
-  // List.findOneAndUpdate({ _id: listId }, { title: title }, { new: true })
-  //   .then((list) => {
+const editCard = async(req, res, next) => {
+  const cardId = req.params.id;
+  const updatedCard = req.body.card;
+  
+  const actionDescriptions = getActions(updatedCard);
 
-  //     res.json(list);
-  //   })
-  // .catch((err) =>
-  //   next(new HttpError("Could not update list, please try again", 500))
-  // );
+  const actionIds = await createActionsFromDescriptions(actionDescriptions, cardId);
+  
+  updatedCard.actions = await Card.findOne({ _id: cardId })
+    .then((card) => {
+      return card.actions ? [...card.actions, ...actionIds] : actionIds;
+    })
+
+
+  //This should be updating a card to include any changes
+  Card.findOneAndUpdate({ _id: cardId }, updatedCard)
+    .catch(err => 
+      next(new HttpError("Could not update card, please try again", 500))
+    )
+  //This should be populating the found card with all the action objects by using
+  // the array of action IDs that is already in the card
+  // then returning the response
+  //try execPopulate() ??
+  /*
+      ( async() => {
+
+    var user = await User.findOne( { _id } );
+
+    await user.populate( 'comments' ).execPopulate(); // Works as expected
+
+} );
+
+  */
+  Card.findOne({ _id: cardId })
+  .populate({ path: 'actions' })
+  .then((card) => {
+    return res.json(card)
+  })
+  .catch((err) =>
+    next(new HttpError("Populating the card failed, please try again", 500))
+  );
+      
 };
+
+
 
 exports.createCard = createCard;
 exports.sendCard = sendCard;

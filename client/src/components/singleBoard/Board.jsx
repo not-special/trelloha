@@ -20,14 +20,20 @@ const Board = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const params = useParams();
+  const urlId = params.id;
   let boardId;
   const path = location.pathname;
   const cards = useSelector(state => state.cards);
+  
 
   if (path.includes("cards")) {
-    console.log(cards);
+    // console.log("cards", cards);
+    const currentCard = cards.find(card => card._id === urlId);
+    if (currentCard) {
+      boardId = currentCard.boardId; 
+    }
   } else {
-    boardId = params.id;
+    boardId = urlId;
   }
   
   const boards = useSelector(state => state.boards);
