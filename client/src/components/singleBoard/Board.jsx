@@ -6,10 +6,9 @@ import { fetchBoard } from '../../features/boards/boards';
 import Header from "../ui/Header";
 import List from "./List";
 import { createList } from '../../features/lists/lists'
-// import Card from "./Card";
+
 
 const Board = () => {
-  // const [cardIsActive, setCardIsActive] = useState("");
   const [addingList, setAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
   const [addingCard, setAddingCard] = useState("");
@@ -27,7 +26,6 @@ const Board = () => {
   
 
   if (path.includes("cards")) {
-    // console.log("cards", cards);
     const currentCard = cards.find(card => card._id === urlId);
     if (currentCard) {
       boardId = currentCard.boardId; 

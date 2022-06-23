@@ -88,17 +88,19 @@ const editCard = async(req, res, next) => {
 
   const actionIds = await createActionsFromDescriptions(actionDescriptions, cardId);
   
-  updatedCard.actions = await Card.findOne({ _id: cardId })
-    .then((card) => {
-      return card.actions ? [...card.actions, ...actionIds] : actionIds;
-    })
+  const oldCard = await Card.findOne({ _id: cardId })
+
+  oldCard.actions = oldCard.actions ? [...oldCard.actions, ...actionIds] : actionIds;
+   
 
 
   //This should be updating a card to include any changes
-  Card.findOneAndUpdate({ _id: cardId }, updatedCard)
-    .catch(err => 
-      next(new HttpError("Could not update card, please try again", 500))
-    )
+  await Card.findOneAndUpdate({ _id: cardId }, updatedCard, {new: true});
+  
+  const newCard = await Card.findById(cardId).populate({ path:'actions'} );
+  console.log("newCard", newCard);
+
+  res.json(newCard);
   //This should be populating the found card with all the action objects by using
   // the array of action IDs that is already in the card
   // then returning the response
@@ -113,14 +115,14 @@ const editCard = async(req, res, next) => {
 } );
 
   */
-  Card.findOne({ _id: cardId })
-  .populate({ path: 'actions' })
-  .then((card) => {
-    return res.json(card)
-  })
-  .catch((err) =>
-    next(new HttpError("Populating the card failed, please try again", 500))
-  );
+  // Card.findOne({ _id: cardId })
+  // .populate({ path: 'actions' })
+  // .then((card) => {
+  //   return res.json(card)
+  // })
+  // .catch((err) =>
+  //   next(new HttpError("Populating the card failed, please try again", 500))
+  // );
       
 };
 
