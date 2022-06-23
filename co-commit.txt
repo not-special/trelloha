@@ -1,4 +1,4 @@
-git commit -m "backend, routing for card modal done
+git commit -m "frontend, new branch refactor to smaller components
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>
