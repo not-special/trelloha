@@ -41,10 +41,16 @@ const CardSchema = new Schema({
 		ref: "Board"
 	},
   comments:  [
-    { type: String, },
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
+    }
   ],
   actions: [
- // Need to come back to this??
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Action'
+    }
   ],
 })
 

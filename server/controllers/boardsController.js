@@ -18,7 +18,7 @@ const getBoardById = (req, res) => {
   // })
   .populate({
     path: 'lists',
-    populate: { path: 'cards' },
+    populate: { path: 'cards'},
   })
   .then((board) => {
     return res.json(board)

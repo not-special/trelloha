@@ -2,19 +2,19 @@ import React from "react";
 import { Route } from "react-router-dom";
 import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
-import Board from "./singleBoard/Board";
-import Card from "./singleBoard/Card";
-import UISection from "./ui/UISection";
-import AllBoards from "./ui/AllBoards";
-import CardArchived from "./ui/CardArchived";
-import CardEditingDescription from "./ui/CardEditingDescription";
-import SingleCard from "./ui/SingleCard";
-import CopyCardPopover from "./ui/CopyCardPopover";
-import CreateBoard from "./ui/CreateBoard";
-import DueDatePopover from "./ui/DueDatePopover";
-import LabelsPopover from "./ui/LabelsPopover";
-import MoveCardPopover from "./ui/MoveCardPopover";
-import SingleBoard from "./ui/SingleBoard";
+import Board from "./ui/board/Board";
+import Card from "./ui/card/Card";
+import UISection from "./uiReference/UISection";
+import AllBoards from "./uiReference/AllBoards";
+import CardArchived from "./uiReference/CardArchived";
+import CardEditingDescription from "./uiReference/CardEditingDescription";
+import SingleCard from "./uiReference/SingleCard";
+import CopyCardPopover from "./uiReference/CopyCardPopover";
+import CreateBoard from "./uiReference/CreateBoard";
+import DueDatePopover from "./uiReference/DueDatePopover";
+import LabelsPopover from "./uiReference/LabelsPopover";
+import MoveCardPopover from "./uiReference/MoveCardPopover";
+import SingleBoard from "./uiReference/SingleBoard";
 
 const Application = () => {
   return (
@@ -24,20 +24,20 @@ const Application = () => {
       <Route path="/cards/:id" component={Card}/>
       <Route path="/cards/:id" component={Board}/>
       <Route path="/boards/:id" component={Board}/>
-      <Route path="/ui" exact component={UISection} />
-      <Route path="/ui/allBoards" component={AllBoards} />
-      <Route path="/ui/cardArchived" component={CardArchived} />
+      <Route path="/uiReference" exact component={UISection} />
+      <Route path="/uiReference/allBoards" component={AllBoards} />
+      <Route path="/uiReference/cardArchived" component={CardArchived} />
       <Route
-        path="/ui/cardEditingDescription"
+        path="/uiReference/cardEditingDescription"
         component={CardEditingDescription}
       />
-      <Route path="/ui/card" component={SingleCard} />
-      <Route path="/ui/copyCardPopover" component={CopyCardPopover} />
-      <Route path="/ui/createBoard" component={CreateBoard} />
-      <Route path="/ui/dueDatePopover" component={DueDatePopover} />
-      <Route path="/ui/labelsPopover" component={LabelsPopover} />
-      <Route path="/ui/moveCardPopover" component={MoveCardPopover} />
-      <Route path="/ui/singleBoard" component={SingleBoard} />
+      <Route path="/uiReference/card" component={SingleCard} />
+      <Route path="/uiReference/copyCardPopover" component={CopyCardPopover} />
+      <Route path="/uiReference/createBoard" component={CreateBoard} />
+      <Route path="/uiReference/dueDatePopover" component={DueDatePopover} />
+      <Route path="/uiReference/labelsPopover" component={LabelsPopover} />
+      <Route path="/uiReference/moveCardPopover" component={MoveCardPopover} />
+      <Route path="/uiReference/singleBoard" component={SingleBoard} />
     </div>
   );
 };

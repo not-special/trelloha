@@ -28,8 +28,8 @@ const addCommentsToCard = (req, res, next) => {
   const comment = req.comment;
   const cardId = req.comment.cardId;
   Card.findByIdAndUpdate(cardId, {
-    $addToSet: { comment: comment._id }, // adds comment to the cards array in list
-  }).then(() => {
+    $addToSet: { comments: comment._id }, // adds comment to the cards array in list
+  }, { new: true }).then((card) => {
     next();
   })
   .catch((err) =>
@@ -43,6 +43,8 @@ const sendCard = (req, res) => res.json(req.card);
 const getCardById = (req, res) => {
   const cardId = req.params.id;
   Card.findOne({ _id: cardId })
+  .populate({ path:'actions'} )
+  .populate({ path:'comments'} )
   .then((card) => {
     return res.json(card)
   })
@@ -91,42 +93,13 @@ const editCard = async(req, res, next) => {
   const oldCard = await Card.findOne({ _id: cardId })
 
   oldCard.actions = oldCard.actions ? [...oldCard.actions, ...actionIds] : actionIds;
-   
-
-
-  //This should be updating a card to include any changes
+  
   await Card.findOneAndUpdate({ _id: cardId }, updatedCard, {new: true});
   
   const newCard = await Card.findById(cardId).populate({ path:'actions'} );
-  console.log("newCard", newCard);
 
   res.json(newCard);
-  //This should be populating the found card with all the action objects by using
-  // the array of action IDs that is already in the card
-  // then returning the response
-  //try execPopulate() ??
-  /*
-      ( async() => {
-
-    var user = await User.findOne( { _id } );
-
-    await user.populate( 'comments' ).execPopulate(); // Works as expected
-
-} );
-
-  */
-  // Card.findOne({ _id: cardId })
-  // .populate({ path: 'actions' })
-  // .then((card) => {
-  //   return res.json(card)
-  // })
-  // .catch((err) =>
-  //   next(new HttpError("Populating the card failed, please try again", 500))
-  // );
-      
 };
-
-
 
 exports.createCard = createCard;
 exports.sendCard = sendCard;
