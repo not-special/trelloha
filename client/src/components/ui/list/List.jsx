@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CardTile from "./CardTile";
+import CardTile from "../card/CardTile";
 import { useState } from "react";
-import { editList } from '../../features/lists/lists';
-import { createCard } from '../../features/cards/cards';
+import { editList } from '../../../features/lists/lists';
+import { createCard } from '../../../features/cards/cards';
 
 const List = ({ list, onAddCardForm, cardFormActive, onCardSelect }) => {
   const dispatch = useDispatch();

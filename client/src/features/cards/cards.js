@@ -26,6 +26,18 @@ export const fetchCard = createAsyncThunk(
   }
 );
 
+export const createComment = createAsyncThunk(
+  "cards/createComment",
+  async (newComment, callback) => {
+    const data = await apiClient.createComment(newComment);
+    if (callback) {
+      callback;
+    }
+    return data;
+  }
+);
+
+
 const cardSlice = createSlice({
   name: "cards",
   initialState,
@@ -50,6 +62,13 @@ const cardSlice = createSlice({
       const card = action.payload;     
       const cardsWithoutCurrent = state.filter(c => c._id !== card._id );
       return [...cardsWithoutCurrent, card];
+    });
+    builder.addCase(createComment.fulfilled, (state, action) => {
+      const comment = action.payload;     
+      const cardsWithoutCurrent = state.filter(c => c._id !== comment.cardId);
+      const currCard = state.find(c => c._id === comment.cardId);
+      currCard.comments = [...currCard.comments, comment];
+      return [...cardsWithoutCurrent, currCard];
     });
   },
 });

@@ -1,4 +1,4 @@
-git commit -m "frontend, new branch refactor to smaller components
+git commit -m "frontend, reduced to smaller components
 
 
 Co-authored-by: Katarina Rosiak <katarinarosiak@gmail.com>
